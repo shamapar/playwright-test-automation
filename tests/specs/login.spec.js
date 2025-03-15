@@ -1,19 +1,17 @@
 import { test, expect } from '@playwright/test';
+import LoginPage from '..//pages/login.page';
 
 test('validate login', async ({ page }) => {
+
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-    const loginTitle = page.locator("//h5[contains(@class,'login-title')]");
-    await expect(loginTitle).toHaveText("Login");
 
-    const username = page.locator("//input[@name='username']");
-    const password = page.locator('//input[@name="password"]');
-    const login = page.locator("//button[@type='submit']");
+    const loginPage = new LoginPage(page);
+    await expect(loginPage.loginTitle).toHaveText("Login");
 
-    await username.fill("Admin");
-    await password.fill("admin123");
-    await login.click();
+    await loginPage.usernameBox.fill("Admin");
+    await loginPage.passwordbox.fill("admin123");
+    await loginPage.loginButton.click();
 
-    const dasboard = page.locator("//h6");
-    await expect(dasboard).toHaveText("Dashboard");
+    await expect(loginPage.dashboardTtitle).toHaveText("Dashboard");
 
 }) 

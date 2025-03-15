@@ -1,15 +1,12 @@
 import { test, expect } from '@playwright/test';
+import RegistrationPage from '../pages/registration.page';
 
-test('validate signup', async({ page })=>{
+test('validate signup', async ({ page }) => {
 
     await page.goto("https://parabank.parasoft.com/parabank/index.htm");
+    const registrationPage = new RegistrationPage(page);
+    await expect(registrationPage.registrationPageTitle).toHaveText("Customer Login");
 
-    const login= page.locator("//h2");
-    await expect(login).toHaveText("Customer Login");
-
-    const register= page.locator("//a[contains(@href,'register')]");
-    await register.click();
-
-    const signuppage=page.locator("//h1");
-    await expect(signuppage).toHaveText("Signing up is easy!");
+    await registrationPage.registerButton.click();
+    await expect(registrationPage.signUpPage).toHaveText("Signing up is easy!");
 })

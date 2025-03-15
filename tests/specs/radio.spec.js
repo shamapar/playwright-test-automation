@@ -1,78 +1,80 @@
 import { test, expect } from '@playwright/test';
+import RadioPage from '../pages/radio.page';
 
 test.beforeEach('navigate to radio page', async ({ page }) => {
+
     await page.goto("https://letcode.in/test");
-    await page.locator('//*[@href="/radio"]').click();
-    await expect(page.locator("//*[text()='Radio & Checkbox']")).toHaveText("Radio & Checkbox");
+
+    const radioPage = new RadioPage(page);
+    await radioPage.radioButtonLink.click();
+    await expect(radioPage.radioPageTitle).toHaveText("Radio & Checkbox");
 
 })
 
 test('select any radio button', async ({ page }) => {
-    await page.locator('#yes').check();
-    await expect(page.locator('#yes')).toBeChecked();
-    await expect(page.locator('#no')).toBeChecked({ checked: false });
+
+    const radioPage = new RadioPage(page);
+    await radioPage.radioButtonYes.check();
+    await expect(radioPage.radioButtonYes).toBeChecked();
+    await expect(radioPage.radioButtonNo).toBeChecked({ checked: false });
 
 })
 
 test('check only one radio button selected', async ({ page }) => {
 
-    const yesRadioBox = page.locator("#one");
-    const noRadioBox = page.locator('#two');
+    const radioPage = new RadioPage(page);
 
-    await yesRadioBox.check();
-    await expect(yesRadioBox).toBeChecked();
-    await expect(noRadioBox).not.toBeChecked();
+    await radioPage.radioButtonYes.check();
+    await expect(radioPage.radioButtonYes).toBeChecked();
+    await expect(radioPage.radioButtonNo).not.toBeChecked();
 
-    await noRadioBox.check();
-    await expect(noRadioBox).toBeChecked();
-    await expect(yesRadioBox).toBeChecked({ checked: false })
+    await radioPage.radioButtonNo.check();
+    await expect(radioPage.radioButtonNo).toBeChecked();
+    await expect(radioPage.radioButtonYes).toBeChecked({ checked: false })
 
 })
 
 test.fixme('check bug', async ({ page }) => {
 
-    const yesRadioBox = page.locator("#nobug");
-    const noRadioBox = page.locator('#bug');
+    const radioPage = new RadioPage(page);
 
-    await yesRadioBox.check();
-    await expect(yesRadioBox).toBeChecked();
-    await expect(noRadioBox).not.toBeChecked();
+    await radioPage.checkboxYes.check();
+    await expect(radioPage.checkboxYes).toBeChecked();
+    await expect(radioPage.checkboxNo).not.toBeChecked();
 
-    await noRadioBox.check();
-    await expect(noRadioBox).toBeChecked();
-    await expect(yesRadioBox).toBeChecked({ checked: false })
+    await radioPage.checkboxNo.check();
+    await expect(radioPage.checkboxNo).toBeChecked();
+    await expect(radioPage.checkboxYes).toBeChecked({ checked: false })
 
 })
 
 test('check which radio is selected', async ({ page }) => {
-    const buttonLocator = page.locator('//*[@type="radio" and @checked]/parent::label');
-    console.log(await buttonLocator.innerText());
 
-    const foo = page.locator("#foo");
-    const bar = page.locator('#notfoo');
+    const radioPage = new RadioPage(page);
 
-    console.log(await foo.isChecked());
-    console.log(await bar.isChecked());
+    console.log(await radioPage.selectedRadioButton.innerText());
+    console.log(await radioPage.radioButtonFoo.isChecked());
+    console.log(await radioPage.radioButtonBar.isChecked());
 })
 
 test('confirm last radio is disabled', async ({ page }) => {
 
-    const radioLocator = page.locator("//*[@name='plan']");
-    await expect(radioLocator.last()).toBeDisabled();
+    const radioPage = new RadioPage(page);
+    await expect(radioPage.disabledRadioButton.last()).toBeDisabled();
 })
 
 test('check the checkbox checked', async ({ page }) => {
 
-    const checkboxLocator = page.locator('//input[@type="checkbox" and @checked]');
-    await expect(checkboxLocator).toBeChecked();
-    console.log(await checkboxLocator.isChecked());
+    const radioPage = new RadioPage(page);
+    await expect(radioPage.checkedbox).toBeChecked();
+    console.log(await radioPage.checkedbox.isChecked());
 
 })
 
 test('check the terms', async ({ page }) => {
 
-    const termsLocator = page.locator("//*[normalize-space(text())='I agree to the']//input");
-    await termsLocator.check();
-    await expect(termsLocator).toBeChecked();
+    const radioPage = new RadioPage(page);
+    await radioPage.termsRadioButton.check();
+    await expect(radioPage.termsRadioButton).toBeChecked();
 
 })
