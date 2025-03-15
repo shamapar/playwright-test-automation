@@ -1,5 +1,5 @@
 
-import { appUrl, titleLocator, notification } from './config';
+import { appUrl, titleLocator, notification } from '../pages/config';
 import { test, expect } from '@playwright/test';
 
 test.beforeEach('navigating to dropdown page', async ({ page }) => {

@@ -7,6 +7,6 @@ export function titleLocator(label) {
 
 
 export function notification(label) {
-    const locator = `//*[text()="${label}"]`
+    const locator = `//*[normalize-space(text())="${label}"]`
     return locator;
 }

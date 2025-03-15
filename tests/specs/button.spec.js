@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { appUrl } from './config.js';
+import { appUrl } from '../pages/config.js';
 
 test.beforeEach('open homepage', async ({ page }) => {
 

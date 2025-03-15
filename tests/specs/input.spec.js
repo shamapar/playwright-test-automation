@@ -1,15 +1,17 @@
 import { expect, test } from '@playwright/test';
+import InputPage from '../pages/input.page';
 
 test.beforeEach('open app', async ({ page }) => {
     await page.goto("https://letcode.in/test");
-    const edit = page.locator("//a[@href='/edit']");
-    await expect(edit).toHaveText("Edit");
-    await edit.click();
-    const inputTitle = page.locator("//h1");
-    await expect(inputTitle).toBeVisible();
+
+    const inputPage = new InputPage(page);
+
+    await expect(inputPage.editLink).toHaveText("Edit");
+    await inputPage.editLink.click();
+    await expect(inputPage.title).toBeVisible();
 })
 
-test('validate input field', async ({ page }) => {
+test.only('validate input field', async ({ page }) => {
     const fullname = page.locator("#fullName");
     await fullname.fill('Shama');
     await expect(fullname).toHaveValue('Shama');

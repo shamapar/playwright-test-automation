@@ -1,4 +1,5 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
+
 test('multidropdown testing', async ({ page }) => {
     await page.goto("https://testautomationpractice.blogspot.com/");
     await expect(page).toHaveURL("https://testautomationpractice.blogspot.com/");
@@ -8,7 +9,7 @@ test('multidropdown testing', async ({ page }) => {
     // await expect(opt).toHaveCount(7);
     // await expect(opt).toContainText(['Red', 'Blue']);
 
-    const locator = (await page.$$('#colors option'));//stored in array
+    const locator = await page.$$('#colors option');//stored in array
     console.log("All options", locator.length);
     expect(locator.length).toEqual(7);
 
