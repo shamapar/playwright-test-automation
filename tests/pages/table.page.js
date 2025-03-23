@@ -50,6 +50,43 @@ class Tablepage {
 
 
     }
+    async printingTableData() {
+        const dessertrow = await this.page.locator('#table1>tbody>tr').all();
+
+        const userData = [];
+
+        for (let i = 0; i < dessertrow.length; i++) {
+
+            const columns = await dessertrow[i].locator('td').all();
+
+            const personObject = {
+                lastName: "",
+                firstName: "",
+                email: "",
+                due: 0
+            }
+
+            for (let j = 0; j < columns.length; j++) {
+                const value = await columns[j].textContent();
+
+                if (j === 0) personObject.lastName = value;
+                else if (j === 1) personObject.firstName = value;
+                else if (j === 2) personObject.email = value;
+                else if (j === 3) personObject.due = value;
+            }
+
+            userData.push(personObject);
+        }
+
+        console.log(userData);
+    }
+
+
+
+
+
+
 }
 export default Tablepage;
+
 
