@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test';
+
 class LoginPage {
     /**
      * 
@@ -21,10 +22,15 @@ class LoginPage {
     get loginButton() {
         return this.page.locator("//button[@type='submit']");
     }
-
     get dashboardTtitle() {
         return this.page.locator("//h6");
     }
 
+    async loginToApplication(username, password) {
+
+        await this.usernameBox.fill(username);
+        await this.passwordbox.fill(password);
+        await this.loginButton.click();
+    }
 }
 export default LoginPage;
