@@ -30,6 +30,7 @@ test('Dismiss Alert', async ({ page }) => {
         await dialog.dismiss()
     });
 
+
     const alertPage = new AlertPage(page);
     await alertPage.dismissAlert.click();
 })
@@ -51,6 +52,6 @@ test('sweet alert', async ({ page }) => {
 
     const alertPage = new AlertPage(page);
     await alertPage.sweetAlertButton.click();
-    await expect(alertPage.sweetAlertButton).toHaveText("Modern Alert - Some people address me as sweet alert as well");
+    await expect(alertPage.promptTitle).toHaveText("Modern Alert - Some people address me as sweet alert as well");
     await alertPage.popupCloseIcon.click();
 })
