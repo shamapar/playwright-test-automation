@@ -4,11 +4,15 @@
  ```
  Node.js
 ```
+
 ### clone repository
 ```
 git clone https://github.com/shamapar/playwright-test-automation.git
 ```
-
+Install dependencies
+```
+npm install
+```
 
 Install browser dependencies
 ```
